@@ -3,7 +3,8 @@
 
 Usage: md_to_clipboard.py articles/<slug>.md
 Writes articles/<slug>.html next to the input, copies it as HTML, and opens it in the browser.
-Pasting into a blank Google Doc keeps headings, lists, tables, bold, and links.
+Pasting into a blank Google Doc keeps headings, lists, tables, bold, links, and images.
+Images use `![alt](url)` on their own line; the width comes from the URL's `w=` value (default 800).
 """
 import html
 import re
@@ -14,6 +15,7 @@ import sys
 def inl(s):
     s = html.escape(s, quote=False)
     s = re.sub(r"\*\*(.+?)\*\*", r"<b>\1</b>", s)
+    s = re.sub(r"(?<![*\w])\*([^*]+?)\*(?![*\w])", r"<i>\1</i>", s)
     s = re.sub(r"\[([^\]]+)\]\(([^)]+)\)", r'<a href="\2">\1</a>', s)
     return s
 
@@ -25,6 +27,13 @@ def convert(lines):
         meta = re.match(r"> Meta description: (.*)", l)
         if meta:
             out.append(f"<p><b>Meta description:</b> {inl(meta.group(1))}</p>")
+            i += 1
+            continue
+        img = re.match(r"!\[([^\]]*)\]\(([^)]+)\)$", l.strip())
+        if img:
+            alt = html.escape(img.group(1))
+            w = re.search(r"[?&]w=(\d+)", img.group(2))
+            out.append(f'<p><img src="{img.group(2)}" alt="{alt}" width="{w.group(1) if w else 800}"></p>')
             i += 1
             continue
         m = re.match(r"(#{1,3}) (.*)", l)

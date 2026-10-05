@@ -100,7 +100,38 @@ Always research before writing a single line. Never write from memory alone.
 
 See `references/example-article.md` for an article that passes all the rules.
 
-## 5. Deliver as rich text
+## 5. Add images
+
+Every article gets exactly 2 images: 1 featured image and 1 body image. Source them from Unsplash (free photos only, never Unsplash+) or Pexels.
+
+1. Find candidates with WebFetch on `https://unsplash.com/s/photos/<query>` (Pexels blocks automated access without an API key). Download small previews and look at them before choosing.
+2. Open the chosen photo's page and confirm the photographer and "Free to use under the Unsplash License".
+3. Put both images in the Markdown in this exact format:
+
+   ```markdown
+   **Featured image** (1200 x 800, file: <main-keyword-slug>-featured.jpg)
+
+   Alt text: <describes the photo, contains the main keyword>
+
+   ![<same alt text>](https://images.unsplash.com/photo-<id>?w=1200&h=800&fit=crop&q=80&fm=jpg)
+
+   *<caption sentence containing the main keyword> (Image by [Unsplash](<photo page URL>))*
+   ```
+
+   - Featured image block goes right after the meta description, before the H1. Size 1200 x 800.
+   - Body image block goes in the first H2, after its lead sentences. Width 800 (`?w=800&q=80&fm=jpg`).
+   - Alt text and caption must both contain the main keyword. The visible `Alt text:` line sits above the image, the caption below it.
+   - For Pexels, the caption ends with `(Image by [Pexels](<photo page URL>))`.
+4. Save both files to `articles/images/`, named after the main keyword with hyphens. Download a larger source first (e.g. `?w=1800&q=90&fm=jpg`, use `curl --max-time 45`), then resize and compress:
+   ```bash
+   python3 .claude/skills/seo-article/scripts/fit_image.py <src> articles/images/<main-keyword-slug>-featured.jpg --width 1200 --height 800 --max-kb 200
+   python3 .claude/skills/seo-article/scripts/fit_image.py <src> articles/images/<main-keyword-slug>.jpg --width 800 --max-kb 100
+   ```
+   Featured: exactly 1200 x 800, max 200 KB. Body: 800 px wide, max 100 KB.
+
+The checker ignores image blocks, so credit links do not count against the 1 external link.
+
+## 6. Deliver as rich text
 
 The user pastes the article into Google Docs themselves. Do not use the Google Drive/Docs connectors (they need an OAuth login the user prefers to skip), unless the user asks for it.
 
@@ -108,11 +139,11 @@ The user pastes the article into Google Docs themselves. Do not use the Google D
 python3 .claude/skills/seo-article/scripts/md_to_clipboard.py articles/<slug>.md
 ```
 
-This writes `articles/<slug>.html`, copies it to the macOS clipboard as rich text, and opens it in the browser. Tell the user to open a blank Google Doc (`docs.new`) and press **Cmd + V**. Headings, lists, tables, bold, and the link carry over. If the clipboard gets overwritten, they can press Cmd + A, Cmd + C on the opened HTML page.
+This writes `articles/<slug>.html`, copies it to the macOS clipboard as rich text, and opens it in the browser. Tell the user to open a blank Google Doc (`docs.new`) and press **Cmd + V**. Headings, lists, tables, bold, links, and images carry over. In WordPress, pasted images stay hotlinked from Unsplash and do not enter the Media Library, so the user uploads the saved files from `articles/images/` instead. If the clipboard gets overwritten, they can press Cmd + A, Cmd + C on the opened HTML page.
 
-## 6. Report back
+## 7. Report back
 
 Reply in the user's language (usually Vietnamese) with:
-- That the article is on the clipboard, ready to paste into Google Docs, plus the file paths.
+- That the article is on the clipboard, ready to paste into Google Docs, plus the file paths (article and both image files).
 - Checker results: total words, main keyword count and density, words per H2.
 - Any trade-off made (e.g. H2s under 200 words because of the word cap) and the main sources used. Flag any fact where sources disagreed.

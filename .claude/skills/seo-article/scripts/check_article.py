@@ -47,6 +47,8 @@ def main():
     args = ap.parse_args()
 
     raw = open(args.file, encoding="utf-8").read()
+    # Image blocks (label, alt text line, image, "(Image by ...)" caption) are not body text or external links.
+    raw = re.sub(r"^(\*\*Featured image\*\*.*|Alt text: .*|!\[[^\]]*\]\([^)]*\)|\*.*\(Image by \[.*\*)\s*$", "", raw, flags=re.M)
     fails = []
 
     meta = re.search(r"^> Meta description: (.*)$", raw, flags=re.M)

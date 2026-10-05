@@ -46,9 +46,24 @@ def main():
     ap.add_argument("--max-links", type=int, default=1, help="max external links")
     args = ap.parse_args()
 
-    text = open(args.file, encoding="utf-8").read()
-    lines = text.splitlines()
+    raw = open(args.file, encoding="utf-8").read()
     fails = []
+
+    meta = re.search(r"^> Meta description: (.*)$", raw, flags=re.M)
+    if not meta:
+        fails.append("Missing '> Meta description:' line at the top")
+    else:
+        desc = meta.group(1).strip()
+        print(f"Meta description: {len(desc)} characters (max 160)")
+        if len(desc) > 160:
+            fails.append(f"Meta description too long ({len(desc)} characters)")
+        if args.main and not count(desc, args.main):
+            fails.append("Main keyword missing from meta description")
+        if not raw.lstrip().startswith("> Meta description:"):
+            fails.append("Meta description must be the first line")
+    # The meta line is not part of the article body.
+    text = re.sub(r"^> Meta description: .*\n*", "", raw, flags=re.M)
+    lines = text.splitlines()
 
     total = len(words(text))
     print(f"Total words: {total} (max {args.max_words})")

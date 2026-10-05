@@ -22,6 +22,11 @@ def convert(lines):
     out, i = [], 0
     while i < len(lines):
         l = lines[i]
+        meta = re.match(r"> Meta description: (.*)", l)
+        if meta:
+            out.append(f"<p><b>Meta description:</b> {inl(meta.group(1))}</p>")
+            i += 1
+            continue
         m = re.match(r"(#{1,3}) (.*)", l)
         if m:
             n = len(m.group(1))

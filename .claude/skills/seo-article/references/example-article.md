@@ -1,3 +1,5 @@
+> Meta description: Learn how to use laptop as monitor with Miracast, a capture card, apps, or AirPlay. Plus easy fixes for lag and black screens.
+
 # How to Use Laptop as Monitor: Easy Ways to Turn Your Laptop Into a Second Screen
 
 A spare laptop already has a good screen, so buying a new monitor is not always necessary. This guide shows **how to use laptop as monitor** with four tested methods. In addition, it explains what each one is good for, how gamers use it, and how to fix the problems most people hit.

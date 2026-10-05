@@ -68,11 +68,12 @@ Notes written inside the outline (often in Vietnamese, e.g. `> H2 viết dạng 
 - Prefer a URL you are certain of (Wikipedia is safest). Do not link to competitors' blogs.
 
 **Structure**
-1. H1 title
-2. Intro (50 to 80 words, includes the main keyword)
-3. H2 sections in outline order
-4. FAQs (H2) with H3 questions
-5. Conclusion (40 to 70 words, includes the main keyword, ends with a clear takeaway)
+1. Meta description at the very top, before the H1, written as `> Meta description: ...`. Max 160 characters, includes the exact main keyword, and works as a one-line pitch of the article.
+2. H1 title
+3. Intro (50 to 80 words, includes the main keyword)
+4. H2 sections in outline order
+5. FAQs (H2) with H3 questions
+6. Conclusion (40 to 70 words, includes the main keyword, ends with a clear takeaway)
 
 ## 3. Draft and check
 

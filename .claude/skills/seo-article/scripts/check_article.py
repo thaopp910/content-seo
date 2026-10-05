@@ -38,11 +38,12 @@ def sections(lines, level):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("file")
-    ap.add_argument("--max-words", type=int, default=1000)
+    ap.add_argument("--max-words", type=int, default=1200)
     ap.add_argument("--main", action="append", default=[], help="main keyword (repeat for variants)")
     ap.add_argument("--secondary", action="append", default=[])
     ap.add_argument("--density", type=float, default=1.0, help="target main keyword density in percent")
     ap.add_argument("--max-sentence", type=int, default=25)
+    ap.add_argument("--max-links", type=int, default=1, help="max external links")
     args = ap.parse_args()
 
     text = open(args.file, encoding="utf-8").read()
@@ -53,6 +54,11 @@ def main():
     print(f"Total words: {total} (max {args.max_words})")
     if total > args.max_words:
         fails.append(f"Over word limit by {total - args.max_words}")
+
+    links = re.findall(r"\]\((https?://[^)]+)\)", text)
+    print(f"External links: {len(links)} (max {args.max_links})")
+    if len(links) > args.max_links:
+        fails.append(f"Too many external links ({len(links)})")
 
     if "—" in text or "–" in text:
         fails.append("Contains em dash or en dash")

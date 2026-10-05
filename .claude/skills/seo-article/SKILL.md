@@ -22,7 +22,18 @@ Read these from the user's message. Use the defaults when something is missing; 
 
 Notes written inside the outline (often in Vietnamese, e.g. `> H2 viết dạng câu hỏi`) are rules. Apply them, never print them in the article.
 
-## 2. Writing rules
+## 2. Research before writing
+
+Always research before writing a single line. Never write from memory alone.
+
+1. Use WebSearch and WebFetch on every topic in the outline: how the thing works, current steps and menu paths, limits, prices, versions, and common problems.
+2. Prefer official sources (vendor support pages, documentation, standards bodies, Wikipedia). Cross-check any claim that only one source makes.
+3. Read what top-ranking pages cover for the main keyword, to find gaps and real user problems. Do not copy them.
+4. Keep a short source list in the scratchpad (claim, source URL). Every specific fact in the article (menu path, number, version, price, requirement) must trace back to a source.
+5. If research cannot confirm a fact, leave it out or phrase it generally. Do not guess.
+6. After drafting, do a fact-check pass: go through every specific claim in the draft and match it to a source in the list. Fix or remove anything that does not match. Accuracy matters more than word count.
+
+## 3. Writing rules
 
 **Headings**
 - H2s are active questions ("How Can Users Fix...?"), not statements. Rewrite outline H2s that are not questions.
@@ -61,7 +72,7 @@ Notes written inside the outline (often in Vietnamese, e.g. `> H2 viết dạng 
 
 **Accuracy and naming**
 - Capitalize brands and product names correctly: Samsung, Android, iPhone, iPad, macOS, Windows, AirPlay, Wi-Fi, USB-C, HDMI, PS5, Xbox, Nintendo Switch, YouTube, etc.
-- State only facts you are confident in (menu paths, OS versions, prices as ranges). Avoid exact claims you cannot verify.
+- State only facts confirmed in the research step (menu paths, OS versions, prices as ranges). Drop any claim you could not verify.
 
 **External links**
 - Add exactly 1 external link to an authoritative source (Wikipedia or an official vendor page). Anchor it on the relevant term. Mention other tools by name without linking.
@@ -75,7 +86,7 @@ Notes written inside the outline (often in Vietnamese, e.g. `> H2 viết dạng 
 5. FAQs (H2) with H3 questions
 6. Conclusion (40 to 70 words, includes the main keyword, ends with a clear takeaway)
 
-## 3. Draft and check
+## 4. Draft and check
 
 1. Write the draft as Markdown in the repo at `articles/<slug>.md`.
 2. Run the checker:
@@ -89,7 +100,7 @@ Notes written inside the outline (often in Vietnamese, e.g. `> H2 viết dạng 
 
 See `references/example-article.md` for an article that passes all the rules.
 
-## 4. Deliver as rich text
+## 5. Deliver as rich text
 
 The user pastes the article into Google Docs themselves. Do not use the Google Drive/Docs connectors (they need an OAuth login the user prefers to skip), unless the user asks for it.
 
@@ -99,9 +110,9 @@ python3 .claude/skills/seo-article/scripts/md_to_clipboard.py articles/<slug>.md
 
 This writes `articles/<slug>.html`, copies it to the macOS clipboard as rich text, and opens it in the browser. Tell the user to open a blank Google Doc (`docs.new`) and press **Cmd + V**. Headings, lists, tables, bold, and the link carry over. If the clipboard gets overwritten, they can press Cmd + A, Cmd + C on the opened HTML page.
 
-## 5. Report back
+## 6. Report back
 
 Reply in the user's language (usually Vietnamese) with:
 - That the article is on the clipboard, ready to paste into Google Docs, plus the file paths.
 - Checker results: total words, main keyword count and density, words per H2.
-- Any trade-off made (e.g. H2s under 200 words because of the word cap) and facts the user should verify (menu paths, figures).
+- Any trade-off made (e.g. H2s under 200 words because of the word cap) and the main sources used. Flag any fact where sources disagreed.

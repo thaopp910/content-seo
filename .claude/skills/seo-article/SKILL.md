@@ -104,7 +104,10 @@ See `references/example-article.md` for an article that passes all the rules.
 
 Every article gets exactly 2 images: 1 featured image and 1 body image. Source them from Unsplash (free photos only, never Unsplash+) or Pexels.
 
-1. Find candidates with WebFetch on `https://unsplash.com/s/photos/<query>` (Pexels blocks automated access without an API key). Download small previews and look at them before choosing.
+1. Find candidates with WebFetch on `https://unsplash.com/s/photos/<query>?orientation=landscape` (Pexels blocks automated access without an API key). Download small previews and look at them before choosing.
+   - Pick bright, clear photos where the subject fills the frame. Skip dark shots with large empty areas.
+   - For the featured image, prefer a source that is already about 3:2 (check the preview's size), so resizing to 1200 x 800 does not cut off the subject. Never use a portrait photo as the featured image.
+   - After resizing, look at both final files. If the subject is cut off or the frame is mostly empty, choose another photo.
 2. Open the chosen photo's page and confirm the photographer and "Free to use under the Unsplash License".
 3. Put both images in the Markdown in this exact format:
 
@@ -119,15 +122,15 @@ Every article gets exactly 2 images: 1 featured image and 1 body image. Source t
    ```
 
    - Featured image block goes right after the meta description, before the H1. Size 1200 x 800.
-   - Body image block goes in the first H2, after its lead sentences. Width 800 (`?w=800&q=80&fm=jpg`).
+   - Body image block goes in the first H2, after its lead sentences. Size 800 x 535 (`?w=800&h=535&fit=crop&q=80&fm=jpg`).
    - Alt text and caption must both contain the main keyword. The visible `Alt text:` line sits above the image, the caption below it.
    - For Pexels, the caption ends with `(Image by [Pexels](<photo page URL>))`.
 4. Save both files to `articles/images/`, named after the main keyword with hyphens. Download a larger source first (e.g. `?w=1800&q=90&fm=jpg`, use `curl --max-time 45`), then resize and compress:
    ```bash
    python3 .claude/skills/seo-article/scripts/fit_image.py <src> articles/images/<main-keyword-slug>-featured.jpg --width 1200 --height 800 --max-kb 200
-   python3 .claude/skills/seo-article/scripts/fit_image.py <src> articles/images/<main-keyword-slug>.jpg --width 800 --max-kb 100
+   python3 .claude/skills/seo-article/scripts/fit_image.py <src> articles/images/<main-keyword-slug>.jpg --width 800 --height 535 --max-kb 100
    ```
-   Featured: exactly 1200 x 800, max 200 KB. Body: 800 px wide, max 100 KB.
+   Featured: exactly 1200 x 800, max 200 KB. Body: exactly 800 x 535, max 100 KB.
 
 The checker ignores image blocks, so credit links do not count against the 1 external link.
 

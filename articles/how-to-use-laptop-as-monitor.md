@@ -92,19 +92,19 @@ If problems continue, restart both devices and reconnect them. Also, lowering th
 
 ## FAQs
 
-### Does any laptop work as a monitor?
+### Does Any Laptop Work as a Monitor?
 
 Almost any laptop can, but the method depends on its hardware. Windows laptops with Miracast work wirelessly. Older models need an app or a capture card.
 
-### Is it possible to connect a laptop to a PC with HDMI?
+### Is It Possible to Connect a Laptop to a PC With HDMI?
 
 Not directly in most cases, because laptop HDMI ports only send video out. Instead, use a USB capture card to receive the PC's signal.
 
-### How does a laptop work as a monitor without Wi-Fi?
+### How Does a Laptop Work as a Monitor Without Wi-Fi?
 
 Use a wired route. A capture card or spacedesk over USB works offline. This is how to use a laptop as a monitor where networks are weak.
 
-### Which method works best for PS5 or Xbox?
+### Which Method Works Best for PS5 or Xbox?
 
 A USB 3.0 capture card offers the lowest delay. Alternatively, remote play apps work well on a strong home network.
 

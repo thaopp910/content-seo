@@ -91,6 +91,16 @@ def main():
         if head.lower() not in ("faqs", "faq", "conclusion") and not head.endswith("?"):
             fails.append(f"H2 is not a question: {head}")
 
+    small = {"a", "an", "the", "and", "but", "or", "nor", "as", "at", "by", "for", "in", "of", "on", "to", "via", "vs"}
+    for line in lines:
+        m = re.match(r"#{1,3} (.*)", line)
+        if not m:
+            continue
+        for k, w in enumerate(re.findall(r"[A-Za-z][\w'-]*", m.group(1))):
+            if w[0].islower() and (k == 0 or w.lower() not in small):
+                fails.append(f"Heading not in Title Case ('{w}'): {m.group(1)}")
+                break
+
     faq = next((b for h, b in sections(lines, 2) if h.lower().startswith("faq")), None)
     if faq:
         openers = []

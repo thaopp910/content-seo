@@ -27,6 +27,7 @@ Notes written inside the outline (often in Vietnamese, e.g. `> H2 viết dạng 
 **Headings**
 - H2s are active questions ("How Can Users Fix...?"), not statements. Rewrite outline H2s that are not questions.
 - Keep H3 method names from the outline unless they break a rule.
+- All H1, H2, and H3 headings use Title Case, FAQ questions included ("Does Any Laptop Work as a Monitor?"). Capitalize every word except articles (a, an, the), short conjunctions (and, but, or, nor), and prepositions of three letters or fewer (as, at, by, for, in, of, on, to, via), unless it is the first word. Prepositions of four letters or more are capitalized (With, Into, From, Without).
 - FAQ H3s must not all start the same way. Mix openers: "Does...", "Is it possible...", "How does...", "Which...", "What...". Never all "Can I...".
 
 **Depth (the user's top complaint is "nội dung nông")**

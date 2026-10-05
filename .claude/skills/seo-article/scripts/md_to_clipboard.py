@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
 """Convert an article Markdown file to HTML and copy it to the macOS clipboard as rich text.
 
-Usage: md_to_clipboard.py articles/<slug>.md
+Usage: md_to_clipboard.py articles/<slug>.md [--full]
 Writes articles/<slug>.html next to the input, copies it as HTML, and opens it in the browser.
+By default the meta description, H1, and article body (H2/H3, text, images, captions) are
+copied; the "Featured image (...)" label and "Alt text:" lines are left out.
+Pass --full to include them.
 Pasting into a blank Google Doc keeps headings, lists, tables, bold, links, and images.
 Images use `![alt](url)` on their own line; the width comes from the URL's `w=` value (default 800).
 """
@@ -20,10 +23,13 @@ def inl(s):
     return s
 
 
-def convert(lines):
+def convert(lines, full=False):
     out, i = [], 0
     while i < len(lines):
         l = lines[i]
+        if not full and (l.startswith("**Featured image**") or l.startswith("Alt text:")):
+            i += 1
+            continue
         meta = re.match(r"> Meta description: (.*)", l)
         if meta:
             out.append(f"<p><b>Meta description:</b> {inl(meta.group(1))}</p>")
@@ -73,7 +79,7 @@ def convert(lines):
 def main():
     src = sys.argv[1]
     dst = re.sub(r"\.md$", "", src) + ".html"
-    page = convert(open(src, encoding="utf-8").read().splitlines())
+    page = convert(open(src, encoding="utf-8").read().splitlines(), full="--full" in sys.argv)
     open(dst, "w", encoding="utf-8").write(page)
     hexdata = page.encode("utf-8").hex()
     subprocess.run(["osascript", "-e", f"set the clipboard to «data HTML{hexdata}»"], check=True)

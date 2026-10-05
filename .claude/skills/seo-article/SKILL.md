@@ -142,7 +142,7 @@ The user pastes the article into Google Docs themselves. Do not use the Google D
 python3 .claude/skills/seo-article/scripts/md_to_clipboard.py articles/<slug>.md
 ```
 
-This writes `articles/<slug>.html`, copies it to the macOS clipboard as rich text, and opens it in the browser. Tell the user to open a blank Google Doc (`docs.new`) and press **Cmd + V**. Headings, lists, tables, bold, links, and images carry over. In WordPress, pasted images stay hotlinked from Unsplash and do not enter the Media Library, so the user uploads the saved files from `articles/images/` instead. If the clipboard gets overwritten, they can press Cmd + A, Cmd + C on the opened HTML page.
+This writes `articles/<slug>.html`, copies it to the macOS clipboard as rich text, and opens it in the browser. The meta description, H1, article body, and images are copied. The "Featured image (...)" label and the "Alt text:" lines stay in the .md file (alt text is still set on each image). Add `--full` to copy everything. Tell the user to open a blank Google Doc (`docs.new`) and press **Cmd + V**. Headings, lists, tables, bold, links, and images carry over. In WordPress, pasted images stay hotlinked from Unsplash and do not enter the Media Library, so the user uploads the saved files from `articles/images/` instead. If the clipboard gets overwritten, they can press Cmd + A, Cmd + C on the opened HTML page.
 
 ## 7. Report back
 

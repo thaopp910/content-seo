@@ -113,6 +113,8 @@ def main():
         m = re.match(r"#{1,3} (.*)", line)
         if not m:
             continue
+        if "**" in m.group(1) or "__" in m.group(1):
+            fails.append(f"Heading must not be bold: {m.group(1)}")
         for k, w in enumerate(re.findall(r"[A-Za-z][\w'-]*", m.group(1))):
             if w[0].islower() and (k == 0 or w.lower() not in small):
                 fails.append(f"Heading not in Title Case ('{w}'): {m.group(1)}")

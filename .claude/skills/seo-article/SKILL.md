@@ -39,6 +39,8 @@ Always research before writing a single line. Never write from memory alone.
 - H2s are active questions ("How Can Users Fix...?"), not statements. Rewrite outline H2s that are not questions.
 - Keep H3 method names from the outline unless they break a rule.
 - All H1, H2, and H3 headings use Title Case, FAQ questions included ("Does Any Laptop Work as a Monitor?"). Capitalize every word except articles (a, an, the), short conjunctions (and, but, or, nor), and prepositions of three letters or fewer (as, at, by, for, in, of, on, to, via), unless it is the first word. Prepositions of four letters or more are capitalized (With, Into, From, Without).
+- Headings are never bold. No `**` inside H1, H2, or H3 text (FAQ questions included). The clipboard script also forces headings to normal weight.
+- FAQ questions must cover new ground. Never ask about something an H2 already answers (sign-up steps, timing, purchase rules, etc.). If an outline FAQ repeats body content, replace it with a new question.
 - FAQ H3s must not all start the same way. Mix openers: "Does...", "Is it possible...", "How does...", "Which...", "What...". Never all "Can I...".
 
 **Depth (the user's top complaint is "nội dung nông")**

@@ -7,6 +7,7 @@ By default the meta description, H1, and article body (H2/H3, text, images, capt
 copied; the "Featured image (...)" label and "Alt text:" lines are left out.
 Pass --full to include them.
 Pasting into a blank Google Doc keeps headings, lists, tables, bold, links, and images.
+Headings are never bold: ** is stripped from heading text and font-weight is forced to normal.
 Images use `![alt](url)` on their own line; the width comes from the URL's `w=` value (default 800).
 """
 import html
@@ -45,7 +46,8 @@ def convert(lines, full=False):
         m = re.match(r"(#{1,3}) (.*)", l)
         if m:
             n = len(m.group(1))
-            out.append(f"<h{n}>{inl(m.group(2))}</h{n}>")
+            text = inl(m.group(2).replace("**", ""))
+            out.append(f'<h{n} style="font-weight:normal"><span style="font-weight:normal">{text}</span></h{n}>')
             i += 1
             continue
         if l.startswith("|"):

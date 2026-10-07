@@ -124,7 +124,7 @@ Every article gets exactly 2 images: 1 featured image and 1 body image. Source t
    ```
 
    - Featured image block goes right after the meta description, before the H1. Size 1200 x 800.
-   - Body image block goes in the first H2, after its lead sentences. Size 800 x 535 (`?w=800&h=535&fit=crop&q=80&fm=jpg`).
+   - Body image block goes around the middle of the article (about 50% of the words), never in the first H2 near the top. Place it between paragraphs or before an H3 in the section that sits at the halfway point, and pick a photo that fits that section. Size 800 x 535 (`?w=800&h=535&fit=crop&q=80&fm=jpg`).
    - Alt text and caption must both contain the main keyword. The visible `Alt text:` line sits above the image, the caption below it.
    - For Pexels, the caption ends with `(Image by [Pexels](<photo page URL>))`.
 4. Save both files to `articles/images/`, named after the main keyword with hyphens. Download a larger source first (e.g. `?w=1800&q=90&fm=jpg`, use `curl --max-time 45`), then resize and compress:

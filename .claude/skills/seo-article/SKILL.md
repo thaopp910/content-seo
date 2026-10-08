@@ -68,7 +68,9 @@ Always research before writing a single line. Never write from memory alone.
 - Bold only labels in bullets and UI paths (e.g. **Settings > System**). Do not bold keywords, except the main keyword in the intro and the conclusion, which must be bold.
 
 **Keywords**
-- Main keyword: about 1% density (1,000 words means about 10 uses, variants included). It must appear, in bold, in the intro and the conclusion.
+- Main keyword: about 1% density, so aim for 0.9% to 1.2% (1,000 words means about 10 uses, 1,200 words about 11 to 13, variants included). It must appear, in bold, in the intro and the conclusion.
+- Count each use only once. "how to reset HP laptop" is one use, not one for the full phrase plus one for "reset HP laptop" inside it. The checker now counts this way. If you ever count by hand, use the same rule.
+- Spread uses across the article: H1, intro, several H2 bodies, FAQ, and conclusion. Image alt text and captions do not count toward density. Short variants ("reset an HP laptop", "reset your HP laptop") help reach 1% without repeating the full phrase awkwardly.
 - Secondary keywords: each appears at least once, naturally, in body text. If one already appears in a heading, that counts and you can skip it.
 - Never stuff keywords into one paragraph.
 
@@ -97,7 +99,7 @@ Always research before writing a single line. Never write from memory alone.
      --max-words 1200 --main "laptop as monitor" --main "laptop as a monitor" \
      --secondary "how to use a laptop as a monitor" --secondary "how to use laptop as second monitor"
    ```
-   Pass every variant of the main keyword with `--main`.
+   Pass every variant of the main keyword with `--main` (e.g. `--main "how to reset hp laptop" --main "reset an hp laptop" --main "reset your hp laptop"`). Overlapping variants are counted once, so the reported density is the real one. The check fails outside 0.85% to 1.3% for a 1% target. If density is low, add natural uses in body paragraphs that do not have one yet.
 3. Fix every FAIL (word count, dashes, density, missing intro/conclusion keyword, missing secondary keyword, FAQ over 80 words, long sentences, more than 1 external link). Re-run until it passes.
 
 See `references/example-article.md` for an article that passes all the rules.

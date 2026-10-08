@@ -12,8 +12,13 @@ def words(text):
 
 
 def count(text, phrases):
-    low = text.lower()
-    return sum(len(re.findall(r"\b" + re.escape(p.lower()) + r"\b", low)) for p in phrases)
+    """Count keyword uses without double counting overlapping variants
+    (e.g. "reset hp laptop" inside "how to reset hp laptop")."""
+    if not phrases:
+        return 0
+    alts = sorted({p.lower() for p in phrases}, key=len, reverse=True)
+    pattern = r"\b(?:" + "|".join(re.escape(p) for p in alts) + r")\b"
+    return len(re.findall(pattern, text.lower()))
 
 
 def sections(lines, level):
@@ -84,7 +89,7 @@ def main():
         hits = count(text, args.main)
         density = hits / total * 100 if total else 0
         print(f"Main keyword: {hits} uses, {density:.2f}% density (target {args.density}%)")
-        if density < args.density * 0.7 or density > args.density * 2:
+        if density < args.density * 0.85 or density > args.density * 1.3:
             fails.append(f"Main keyword density {density:.2f}% is far from {args.density}%")
 
         paras = [l for l in lines if l.strip() and not l.startswith(("#", "|", "-", ">"))]

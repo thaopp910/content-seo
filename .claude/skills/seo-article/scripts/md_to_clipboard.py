@@ -28,7 +28,7 @@ def convert(lines, full=False):
     out, i = [], 0
     while i < len(lines):
         l = lines[i]
-        if not full and (l.startswith("**Featured image**") or l.startswith("Alt text:")):
+        if not full and (l.startswith(("**Featured image**", "**Body image**", "Alt text:"))):
             i += 1
             continue
         meta = re.match(r"> Meta description: (.*)", l)

@@ -53,7 +53,7 @@ def main():
 
     raw = open(args.file, encoding="utf-8").read()
     # Image blocks (label, alt text line, image, "(Image by ...)" caption) are not body text or external links.
-    raw = re.sub(r"^(\*\*Featured image\*\*.*|Alt text: .*|!\[[^\]]*\]\([^)]*\)|\*.*\(Image by \[.*\*)\s*$", "", raw, flags=re.M)
+    raw = re.sub(r"^(\*\*(?:Featured|Body) image\*\*.*|Alt text: .*|!\[[^\]]*\]\([^)]*\)|\*.*\(Image by \[.*\*)\s*$", "", raw, flags=re.M)
     fails = []
 
     meta = re.search(r"^> Meta description: (.*)$", raw, flags=re.M)
@@ -92,6 +92,13 @@ def main():
         if density < args.density * 0.85 or density > args.density * 1.3:
             fails.append(f"Main keyword density {density:.2f}% is far from {args.density}%")
 
+        # The user's SEO tool counts only the exact phrase (the first --main), so check it separately.
+        exact = count(text, [args.main[0]])
+        exact_density = exact / total * 100 if total else 0
+        print(f"Exact main keyword '{args.main[0]}': {exact} uses, {exact_density:.2f}% density")
+        if exact_density < args.density * 0.85 or exact_density > args.density * 1.3:
+            fails.append(f"Exact main keyword density {exact_density:.2f}% is far from {args.density}% (add or trim exact uses)")
+
         paras = [l for l in lines if l.strip() and not l.startswith(("#", "|", "-", ">"))]
         if paras and not count(paras[0], args.main):
             fails.append("Main keyword missing from intro")
@@ -121,7 +128,8 @@ def main():
         if "**" in m.group(1) or "__" in m.group(1):
             fails.append(f"Heading must not be bold: {m.group(1)}")
         for k, w in enumerate(re.findall(r"[A-Za-z][\w'-]*", m.group(1))):
-            if w[0].islower() and (k == 0 or w.lower() not in small):
+            # Brand casing like iPhone, eSIM, macOS is correct as written.
+            if w[0].islower() and not any(c.isupper() for c in w[1:]) and (k == 0 or w.lower() not in small):
                 fails.append(f"Heading not in Title Case ('{w}'): {m.group(1)}")
                 break
 
